@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primary">#1C2E46</color>
+    <color name="restaurant">#142232</color>
+    <color name="passenger">#cb202d</color>
+    <color name="delivery">#FFFF00</color>
+    <color name="primary_text">#2d2d2d</color>
+    <color name="secondary_text">#757575</color>
+    <color name ="background">#f4f4f2</color>
+    <color name ="layoutBackground">#edf1f4</color>
+    <color name ="white">#FFFFFF</color>
+    <color name="grey">#F5F8FA</color>
+    <color name="input_background">#ECECEC</color>
+    <color name="icon_background">#20FFFFFF</color>
+    <color name="error">#B00020</color>
+    <color name="green">#00FF00</color>
+</resources>

@@ -1,0 +1,106 @@
+<resources>
+    <string name="app_name">TrainFoodDelivery</string>
+    <string name="restaurant_registration">Restaurant Registration</string>
+    <string name="add_image">Add Image</string>
+    <string name="name">Name</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="middle_name">Middle Name</string>
+    <string name="registered_name_of_restaurateur">Registered Name of Restaurateur</string>
+    <string name="address">Address</string>
+    <string name="pinCode">Pin-code</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="password">Password</string>
+    <string name="passwords_must_have_at_least_8_characters_and_contain_the_following_uppercase_letters_lowercase_letters_numbers_and_symbols">Passwords must have at least 8 characters and contain the following: uppercase letters, lowercase letters, numbers, and symbols.</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="sign_in">Sign In</string>
+    <string name="enter_otp">Enter OTP</string>
+    <string name="get_otp">Get OTP</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="restaurant_name">Restaurant Name</string>
+    <string name="enter_gst_number">Enter GST Number</string>
+    <string name="gumasta_certificate_id">Gumasta Certificate ID</string>
+    <string name="welcome_back">Welcome Back</string>
+    <string name="please_enter_your_credentials">Please Enter your Credentials</string>
+    <string name="mobile_number">Mobile Number</string>
+    <string name="create_new_account">Create New Account</string>
+    <string name="forgot_password">Forgot Password</string>
+    <string name="welcome">Welcome</string>
+    <string name="enter_your_registered_mobile_number">Enter your Registered Mobile Number</string>
+    <string name="verify">Verify</string>
+    <string name="enter_new_password">Enter New Password</string>
+    <string name="change_password">Change Password</string>
+    <string name="delivery_personnel_registration">Delivery Personnel Registration</string>
+    <string name="registered_vehicle_number_gj_xx_xx_xxxx">Registered Vehicle Number (GJ-XX-XX-XXXX)</string>
+    <string name="vehicle_number_eg_gj_01_au_1234">Vehicle Number (eg. GJ-01-AU-1234)</string>
+    <string name="please_enter_your_details">Please Enter your Details</string>
+    <string name="driving_licence_number">Driving Licence Number</string>
+    <string name="train_number">Train Number</string>
+    <string name="enter_train_name">Enter Train Name</string>
+    <string name="expected_time_of_arrival">Expected Time of Arrival</string>
+    <string name="expected_time_of_arrival_eta">Expected Time of Arrival (ETA)</string>
+    <string name="enter_coach_number">Enter Coach Number</string>
+    <string name="enter_train_number">Enter Train Number</string>
+    <string name="enter_your_details">Enter your details</string>
+    <string name="delivery_personnel">Delivery Personnel</string>
+    <string name="passenger">Passenger</string>
+    <string name="restaurateur">Restaurateur</string>
+    <string name="my_menu">My Menu</string>
+    <string name="line">line</string>
+    <string name="orders">Orders</string>
+    <string name="restaurants">Restaurants</string>
+    <string name="available_deliveries">Available Deliveries</string>
+    <string name="orders_to_deliver">Orders to Deliver</string>
+    <string name="add">Add</string>
+    <string name="_0">0</string>
+    <string name="todo">TODO</string>
+    <string name="your_current_location_will_be_used_as_reference_for_your_address_so_make_sure_you_are_at_your_restaurant_while_registering">Your current location will be used as reference for your Address, so make sure you are at your Restaurant while Registering...</string>
+    <string-array name="Select_City">
+        <item>Ahmedabad</item>
+        <item>Vadodara</item>
+        <item>Surat</item>
+        <item>Mumbai</item>
+    </string-array>
+    <string-array name="Station_Code">
+        <item>Ahmedabad Junction (ADI)</item>
+        <item>Vadodara Junction (BRC)</item>
+        <item>Surat (ST)</item>
+        <item>Mumbai Central (MMCT)</item>
+    </string-array>
+    <string name="title_activity_maps">MapsActivity</string>
+    <string name="your_current_location_is_used_as_reference_for_restaurant_s_address_you_may_set_address_to_a_different_location_using_the_map_given_below">Your current location is used as reference for Restaurant\'s Address. You may set address to a different location using the map given below</string>
+    <string name="map">Map</string>
+    <string name="confirm_location">Confirm Location</string>
+    <string name="set_location">Set Location</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="add_a_new_item_to_your_menu">Add a new Item to your Menu</string>
+    <string name="item_name">Item Name</string>
+    <string name="price">Price (₹)</string>
+    <string name="food_quantity_approx_in_ml_g">Food Quantity (approx. in ml/g)</string>
+    <string name="serving_in_no_of_pax">Serving (in no. of pax)</string>
+    <string name="add_to_menu">Add to Menu</string>
+    <string name="food_quantity">Food Quantity</string>
+    <string name="edit">Edit</string>
+    <string name="available">Available</string>
+    <string name="delete">Delete</string>
+    <string name="save_details">Save Details</string>
+    <string name="order_summary">Order Summary</string>
+    <string name="order_status">Order Status</string>
+    <string name="order_id">Order Id</string>
+    <string name="order_details">Order Details</string>
+    <string name="pay_on_delivery_cash_upi_card">Pay on Delivery (Cash/UPI/Card)</string>
+    <string name="ordered_meals">Ordered Meals</string>
+    <string name="nett_amount_incl_gst">Nett Amount (incl. GST)</string>
+    <string name="total_quantity">Total Quantity</string>
+    <string name="payable_amount_incl_gst">Payable Amount (incl. GST)</string>
+    <string name="contact_details">Contact Details</string>
+    <string name="delivery_executive">Delivery Executive</string>
+    <string name="call_delivery_executive">Call Delivery Executive</string>
+    <string name="call_restaurant">Call Restaurant</string>
+    <string name="restaurant">Restaurant</string>
+    <string name="pickup_order">Pickup Order</string>
+    <string name="confirm_pickup">Confirm Pickup</string>
+    <string name="passenger_otp">Passenger OTP</string>
+    <string name="select_user_type">Select User Type</string>
+</resources>
