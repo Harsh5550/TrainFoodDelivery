@@ -76,6 +76,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
                 });
                 binding.acceptLayout.setOnClickListener(v -> {
                     orderListener.onAccepted(order);
+                    binding.layout.setVisibility(View.GONE);
                 });
             }
             else{

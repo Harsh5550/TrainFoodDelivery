@@ -65,9 +65,11 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder
             binding.foodName.setText(menu.name);
             if (menu.foodType.equals("Vegetarian")){
                 binding.vegNonVeg.setText(" Veg");
+                binding.availability.setImageTintList(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.green)));
             }
             else{
                 binding.vegNonVeg.setText(" Non-Veg");
+                binding.availability.setImageTintList(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.error)));
             }
             binding.price.setText("₹"+menu.price);
             binding.quantity.setText("Qty: "+menu.quantity);

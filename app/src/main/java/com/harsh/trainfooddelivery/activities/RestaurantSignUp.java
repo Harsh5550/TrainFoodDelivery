@@ -273,6 +273,7 @@ public class RestaurantSignUp extends AppCompatActivity {
                     loading(false);
                     preferenceManager.putBoolean(Constants.KEY_IS_SIGNED_IN, true);
                     preferenceManager.putString(Constants.KEY_RESTAURANT_ID, documentReference.getId());
+                    preferenceManager.putString(Constants.KEY_RESTAURATEUR_NAME, binding.inputOwnerName.getText().toString());
                     preferenceManager.putString(Constants.KEY_RESTAURANT_NAME, binding.restaurantName.getText().toString());
                     preferenceManager.putString(Constants.KEY_RESTAURANT_IMAGE, encodedImage);
                     preferenceManager.putString(Constants.KEY_RESTAURANT_PHONE_NUMBER, "+91"+binding.inputNumber.getText().toString());

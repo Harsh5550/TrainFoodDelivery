@@ -56,6 +56,8 @@ import com.harsh.trainfooddelivery.utilities.PreferenceManager;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -70,6 +72,7 @@ public class DeliveryHomeActivity extends FragmentActivity implements OnMapReady
     private FirebaseFirestore database;
     private List <Address> addresses;
     private HashMap<String, LatLng> map;
+    private HashMap<String, String> map1;
     private StringBuilder str;
     private Toolbar toolbar;
     private PreferenceManager preferenceManager;
@@ -87,6 +90,12 @@ public class DeliveryHomeActivity extends FragmentActivity implements OnMapReady
         map.put("Surat", new LatLng(21.204950505141824, 72.84103299981118));
         map.put("Rajkot", new LatLng(22.31327488549474, 70.80246717929595));
         map.put("Mountain View", new LatLng(37.3861, -122.083));
+
+        map1=new HashMap<>();
+        map1.put("Ahmedabad", "Ahmedabad Junction (ADI)");
+        map1.put("Vadodara", "Vadodara Junction (BRC)");
+        map1.put("Surat", "Surat (ST)");
+        map1.put("Rajkot", "Rajkot Junction (RJT)");
 
         preferenceManager=new PreferenceManager(getApplicationContext());
 
@@ -255,7 +264,7 @@ public class DeliveryHomeActivity extends FragmentActivity implements OnMapReady
                                             .addOnFailureListener(Throwable::printStackTrace);
 
                                     database.collection(Constants.KEY_COLLECTION_ORDER)
-                                            .whereIn(Constants.KEY_ORDER_PASSENGER_ID, passengerList)
+                                            .whereIn(Constants.KEY_ORDER_PASSENGER_ID, Collections.singletonList(passengerList))
                                             .whereEqualTo(Constants.KEY_ORDER_STATUS, Constants.KEY_ACCEPTED_STATUS)
                                             .addSnapshotListener(new EventListener<QuerySnapshot>() {
                                                 @Override
