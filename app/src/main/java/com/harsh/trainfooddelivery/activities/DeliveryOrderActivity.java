@@ -107,15 +107,11 @@ public class DeliveryOrderActivity extends AppCompatActivity {
 
     @SuppressLint("SetTextI18n")
     private void setOrderDetails(){
-        final String[] restaurantId = new String[1];
-        final String[] passengerId = new String[1];
         FirebaseFirestore database=FirebaseFirestore.getInstance();
         database.collection(Constants.KEY_COLLECTION_ORDER)
                 .document(preferenceManager.getString(Constants.KEY_DELIVERY_ORDER_ID))
                 .get()
                 .addOnSuccessListener(task->{
-                    restaurantId[0] =task.getString(Constants.KEY_ORDER_RESTAURANT_ID);
-                    passengerId[0] =task.getString(Constants.KEY_ORDER_PASSENGER_ID);
                     binding.orderId.setText(task.getId());
                     binding.date.setText(task.getString(Constants.KEY_ORDER_TIMESTAMP));
                     binding.amount.setText("₹"+task.getString(Constants.KEY_ORDER_AMOUNT));
@@ -133,27 +129,31 @@ public class DeliveryOrderActivity extends AppCompatActivity {
                     binding.totalQuantity.setText(String.valueOf(sum));
                     binding.nameDeveloper.setText("Train Food Delivery");
                     binding.numberSupport.setText("1231231231");
-                })
-                .addOnFailureListener(Throwable::printStackTrace);
 
-        database.collection(preferenceManager.getString(Constants.KEY_DELIVERY_CITY))
-                .document(restaurantId[0])
-                .get()
-                .addOnSuccessListener(task->{
-                    binding.restaurantName.setText(task.getString(Constants.KEY_RESTAURANT_NAME));
-                })
-                .addOnFailureListener(Throwable::printStackTrace);
+                    database.collection(preferenceManager.getString(Constants.KEY_DELIVERY_CITY))
+                            .document(Objects.requireNonNull(task.getString(Constants.KEY_ORDER_RESTAURANT_ID)))
+                            .get()
+                            .addOnSuccessListener(v1->{
+                                binding.restaurantName.setText(v1.getString(Constants.KEY_RESTAURANT_NAME));
+                            })
+                            .addOnFailureListener(Throwable::printStackTrace);
 
-        database.collection(Constants.KEY_PASSENGER_COLLECTION)
-                .document(passengerId[0])
-                .get()
-                .addOnSuccessListener(task->{
-                    binding.passengerName.setText(task.getString(Constants.KEY_PASSENGER_NAME));
-                    binding.numberPassenger.setText(task.getString(Constants.KEY_PASSENGER_PHONE_NUMBER));
-                    binding.stationName.setText(task.getString(Constants.KEY_PASSENGER_STATION));
-                    binding.seatDetails.setText("Coach Number: "+task.getString(Constants.KEY_PASSENGER_COACH_NUMBER)+"\nSeat Number: "+task.getString(Constants.KEY_PASSENGER_SEAT_NUMBER));
-                    binding.eta.setText(Constants.KEY_PASSENGER_ETA);
-                    binding.trainDetails.setText("Train Name: "+task.getString(Constants.KEY_PASSENGER_TRAIN_NAME)+"\nTrain Number: "+task.getString(Constants.KEY_PASSENGER_TRAIN_NUMBER));
+                    database.collection(Constants.KEY_PASSENGER_COLLECTION)
+                            .document(Objects.requireNonNull(task.getString(Constants.KEY_ORDER_PASSENGER_ID)))
+                            .get()
+                            .addOnSuccessListener(v2->{
+                                binding.passengerName.setText(v2.getString(Constants.KEY_PASSENGER_NAME));
+                                try {
+                                    binding.numberPassenger.setText(AESCrypt.decrypt("frmeihafokfso", v2.getString(Constants.KEY_PASSENGER_PHONE_NUMBER)));
+                                } catch (GeneralSecurityException e) {
+                                    throw new RuntimeException(e);
+                                }
+                                binding.stationName.setText(v2.getString(Constants.KEY_PASSENGER_STATION));
+                                binding.seatDetails.setText("Coach Number: "+v2.getString(Constants.KEY_PASSENGER_COACH_NUMBER)+"\nSeat Number: "+v2.getString(Constants.KEY_PASSENGER_SEAT_NUMBER));
+                                binding.eta.setText(Constants.KEY_PASSENGER_ETA);
+                                binding.trainDetails.setText("Train Name: "+v2.getString(Constants.KEY_PASSENGER_TRAIN_NAME)+"\nTrain Number: "+v2.getString(Constants.KEY_PASSENGER_TRAIN_NUMBER));
+                            })
+                            .addOnFailureListener(Throwable::printStackTrace);
                 })
                 .addOnFailureListener(Throwable::printStackTrace);
     }

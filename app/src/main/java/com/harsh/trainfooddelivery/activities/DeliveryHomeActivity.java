@@ -52,7 +52,9 @@ import com.harsh.trainfooddelivery.R;
 import com.harsh.trainfooddelivery.databinding.ActivityDeliveryHomeMapsBinding;
 import com.harsh.trainfooddelivery.utilities.Constants;
 import com.harsh.trainfooddelivery.utilities.PreferenceManager;
+import com.scottyab.aescrypt.AESCrypt;
 
+import java.security.GeneralSecurityException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -110,6 +112,8 @@ public class DeliveryHomeActivity extends FragmentActivity implements OnMapReady
             actionBar.setSubtitle(preferenceManager.getString(Constants.KEY_DELIVERY_CITY));
         }
 
+        listener("1HLM1GNXNHBeazCS1fFS");
+
         binding.button.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(this, R.color.secondary_text)));
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -145,9 +149,9 @@ public class DeliveryHomeActivity extends FragmentActivity implements OnMapReady
                                 i++;
                             }
                             AlertDialog.Builder delDialog = new AlertDialog.Builder(this);
-                            delDialog.setTitle("Deregister?");
+                            delDialog.setTitle("PickUp?");
                             delDialog.setIcon(R.drawable.ic_warning);
-                            delDialog.setMessage("Enter OTP given while collection order\n"+stringBuilder.substring(0, stringBuilder.length()-1)+"\nTotal Amount: "+task.getString(Constants.KEY_ORDER_AMOUNT));
+                            delDialog.setMessage("Enter OTP while collecting order\n"+stringBuilder.substring(0, stringBuilder.length()-1)+"\nTotal Amount: "+task.getString(Constants.KEY_ORDER_AMOUNT));
 
                             View view = LayoutInflater.from(this).inflate(R.layout.dialog_otp, null);
                             delDialog.setView(view);
@@ -156,14 +160,16 @@ public class DeliveryHomeActivity extends FragmentActivity implements OnMapReady
                             delDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    if (Objects.equals(task.getString(Constants.KEY_RESTAURANT_OTP), otpEditText.getText().toString())){
-                                        Intent intent=new Intent(getApplicationContext(), DeliveryOrderActivity.class);
-                                        preferenceManager.putString(Constants.KEY_DELIVERY_ORDER_ID, id);
-                                        startActivity(intent);
-                                    }
-                                    else {
-                                        Toast.makeText(DeliveryHomeActivity.this, "Invalid OTP", Toast.LENGTH_SHORT).show();
-                                        dialog.dismiss();
+                                    try {
+                                        if (Objects.equals(task.getString(Constants.KEY_RESTAURANT_OTP), AESCrypt.encrypt("frmeihafokfso", otpEditText.getText().toString()))){
+                                            confirm(id);
+                                        }
+                                        else {
+                                            Toast.makeText(DeliveryHomeActivity.this, "Invalid OTP", Toast.LENGTH_SHORT).show();
+                                            dialog.dismiss();
+                                        }
+                                    } catch (Exception e) {
+                                        Toast.makeText(DeliveryHomeActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             });
@@ -180,6 +186,12 @@ public class DeliveryHomeActivity extends FragmentActivity implements OnMapReady
 
                     });
         });
+    }
+
+    private void confirm(String id){
+        Intent intent=new Intent(getApplicationContext(), DeliveryOrderActivity.class);
+        preferenceManager.putString(Constants.KEY_DELIVERY_ORDER_ID, id);
+        startActivity(intent);
     }
 
     /**
@@ -231,11 +243,12 @@ public class DeliveryHomeActivity extends FragmentActivity implements OnMapReady
                                                                         (Double)(Objects.requireNonNull(documentSnapshot.get(Constants.KEY_RESTAURANT_LONGITUDE)))));
                                                                 restaurantName.put(documentSnapshot.getId(), documentSnapshot.getString(Constants.KEY_RESTAURANT_NAME));
                                                                 database.collection(Constants.KEY_COLLECTION_ORDER)
-                                                                        .whereEqualTo(Constants.KEY_ORDER_RESTAURANT_ID, documentSnapshot.getId())
+                                                                        .whereEqualTo(Constants.KEY_ORDER_CITY, documentSnapshot.getString(Constants.KEY_RESTAURANT_CITY))
+                                                                        .whereEqualTo(Constants.KEY_ORDER_STATUS, Constants.KEY_ACCEPTED_STATUS)
                                                                         .get()
                                                                         .addOnSuccessListener(v->{
                                                                             String id=null;
-                                                                            if (!v.isEmpty() && v.size()>0){
+                                                                            if (v.size()>0){
                                                                                 HashMap<String, String> map= new HashMap<>();
                                                                                 for (int k=0; k<v.getDocuments().size(); k++){
                                                                                     map.put(String.valueOf(k), v.getDocuments().get(k).getString(Constants.KEY_ORDER_TIMESTAMP));
@@ -248,15 +261,11 @@ public class DeliveryHomeActivity extends FragmentActivity implements OnMapReady
                                                                                 }
                                                                             }
                                                                             if (id!=null){
-                                                                                Marker marker=mMap.addMarker(new MarkerOptions().position(new LatLng(Double.parseDouble(Objects.requireNonNull(documentSnapshot.getString(Constants.KEY_RESTAURANT_LATITUDE))), Double.parseDouble(Objects.requireNonNull(documentSnapshot.getString(Constants.KEY_RESTAURANT_LONGITUDE))))).title(documentSnapshot.getString(Constants.KEY_RESTAURANT_NAME)).snippet("ETA: "+v.getDocuments().get(Integer.parseInt(id)).getString(Constants.KEY_ORDER_ETA)).icon(bitmapDescriptorFromVector(getApplicationContext(), R.drawable.restaurant, 200, 200)));
+                                                                                Marker marker=mMap.addMarker(new MarkerOptions().position(new LatLng(documentSnapshot.getDouble(Constants.KEY_RESTAURANT_LATITUDE), documentSnapshot.getDouble(Constants.KEY_RESTAURANT_LONGITUDE))).title(documentSnapshot.getString(Constants.KEY_RESTAURANT_NAME)).snippet("ETA: "+v.getDocuments().get(Integer.parseInt(id)).getString(Constants.KEY_ORDER_ETA)).icon(bitmapDescriptorFromVector(getApplicationContext(), R.drawable.restaurant, 200, 200)));
                                                                                 Objects.requireNonNull(marker).setTag(v.getDocuments().get(Integer.parseInt(id)).getId());
-                                                                                mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(Double.parseDouble(Objects.requireNonNull(documentSnapshot.getString(Constants.KEY_RESTAURANT_LATITUDE))), Double.parseDouble(Objects.requireNonNull(documentSnapshot.getString(Constants.KEY_RESTAURANT_LONGITUDE))))));
-                                                                                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(Double.parseDouble(Objects.requireNonNull(documentSnapshot.getString(Constants.KEY_RESTAURANT_LATITUDE))), Double.parseDouble(Objects.requireNonNull(documentSnapshot.getString(Constants.KEY_RESTAURANT_LONGITUDE)))), 16f));
                                                                             }
                                                                         })
-                                                                        .addOnFailureListener(exception->{
-
-                                                                        });
+                                                                        .addOnFailureListener(Throwable::printStackTrace);
                                                         }
                                                     }
                                                 }

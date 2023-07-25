@@ -81,7 +81,7 @@ public class Constants {
     public static final String KEY_RESTAURANT_OTP="RestaurantOTP";
     public static final String KEY_ORDER_TIMESTAMP="Timestamp";
     public static final String KEY_ORDER_PASSENGER_ID="PassengerId";
-    public static final String KEY_ORDER_RESTAURANT_ID="restaurantId";
+    public static final String KEY_ORDER_RESTAURANT_ID="RestaurantId";
     public static final String KEY_ORDER_DELIVERY_ID="deliveryId";
     public static final String KEY_ORDER_FOOD_ITEM="FoodItem";
     public static final String KEY_ORDER_STATUS="OrderStatus";

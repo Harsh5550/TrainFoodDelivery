@@ -74,6 +74,8 @@
         <activity android:name=".activities.DeliveryChangePassword"/>
         <activity android:name=".activities.DeliverySignIn"/>
         <activity android:name=".activities.DeliverySignUp"/>
+        <activity android:name=".activities.DeliveryOrderActivity"/>
+        <activity android:name=".activities.DeliveryForgotPassword"/>
         <service
             android:name=".firebase.MessagingService"
             android:exported="false">
